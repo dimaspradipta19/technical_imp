@@ -1,16 +1,19 @@
 # technical_imp
 
-A new Flutter project.
+A Flutter project for Technical Test at IMP
 
-## Getting Started
+## What inside this project?
 
-This project is a starting point for a Flutter application.
+Create a project using Flutter with the following requirements:
 
-A few resources to get you started if this is your first Flutter project:
+Create CRUD pages for listing posts, showing post detail, create post, and edit post
+Utilize the endpoints in "Endpoint Testing Applicant IMP"
+Use Flutter package for component
+Use package  flutter_form_builder for form validations
+Use package dio for data fetching
+Use state management concepts
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Notes: We want to see how you solve the requirements above. You do not need to have a complex UI design as the Flutter has sensible defaults that you can leverage. We expect the project would take 4-5 hours for the functionality to be there.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Host the finished project with a proper README file in Git repository services such as GitHub and GitLab and share the link with us, then set the GitHub and GitLab to auto build the apk.
+
