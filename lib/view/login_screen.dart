@@ -11,7 +11,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final _formKey = GlobalKey<FormBuilderState>();
+  final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -35,31 +35,68 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             children: [
               const SizedBox(height: 20),
-              /*Using FormBuilder */
-              FormBuilder(
+              /* Using FormBuilder */
+              // FormBuilder(
+              //   key: _formKey,
+              //   child: Column(
+              //     children: [
+              //       Container(
+              //         decoration: BoxDecoration(border: Border.all()),
+              //         child: FormBuilderTextField(
+              //           name: "Email",
+              //           controller: _emailController,
+              //           decoration: const InputDecoration(
+              //               hintText: "Masukkan email",
+              //               border: InputBorder.none),
+              //         ),
+              //       ),
+              //       const SizedBox(height: 20),
+              //       Container(
+              //         decoration: BoxDecoration(border: Border.all()),
+              //         child: FormBuilderTextField(
+              //           name: "Password",
+              //           controller: _passwordController,
+              //           decoration: const InputDecoration(
+              //               hintText: "Masukkan password",
+              //               border: InputBorder.none),
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
+
+              Form(
                 key: _formKey,
                 child: Column(
                   children: [
-                    Container(
-                      decoration: BoxDecoration(border: Border.all()),
-                      child: FormBuilderTextField(
-                        name: "Email",
-                        controller: _emailController,
-                        decoration: const InputDecoration(
-                            hintText: "Masukkan email",
-                            border: InputBorder.none),
-                      ),
+                    TextFormField(
+                      controller: _emailController,
+                      decoration:
+                          const InputDecoration(border: OutlineInputBorder(), hintText: "Email"),
+                      validator: (valueEmail) {
+                        if (valueEmail == null || valueEmail.isEmpty) {
+                          return 'Please enter some text';
+                        }
+                        if (!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]")
+                            .hasMatch(valueEmail)) {
+                          return "Please enter valid email";
+                        }
+                        return null;
+                      },
                     ),
-                    const SizedBox(height: 20),
-                    Container(
-                      decoration: BoxDecoration(border: Border.all()),
-                      child: FormBuilderTextField(
-                        name: "Password",
-                        controller: _passwordController,
-                        decoration: const InputDecoration(
-                            hintText: "Masukkan password",
-                            border: InputBorder.none),
-                      ),
+                    const SizedBox(height: 20.0),
+                    TextFormField(
+                      controller: _passwordController,
+                      decoration:
+                          const InputDecoration(border: OutlineInputBorder(), hintText: "Password"),
+                      validator: (valuePassword) {
+                        if (valuePassword == null || valuePassword.isEmpty) {
+                          return 'Please enter your password';
+                        } else if (valuePassword.length < 8) {
+                          return "Password must be 8 character";
+                        }
+                        return null;
+                      },
                     ),
                   ],
                 ),
@@ -67,8 +104,12 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(height: 40),
               ElevatedButton(
                 onPressed: () {
-                  Provider.of<AuthProvider>(context, listen: false).postLogin(
-                      _emailController.text, _passwordController.text, context);
+                  if (_formKey.currentState!.validate()) {
+                    Provider.of<AuthProvider>(context, listen: false).postLogin(
+                        _emailController.text,
+                        _passwordController.text,
+                        context);
+                  }
                 },
                 child: const Text("Login"),
               ),
